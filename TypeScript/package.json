@@ -6,37 +6,21 @@
     "precompile": "rimraf app/**/*.js test/**/*.js",
     "compile": "tsc",
     "pretest": "rimraf app/**/*.js test/**/*.js",
-    "test": "nyc mocha"
+    "test": "jest",
+    "test:watch": "jest --watchAll --collect-coverage"
   },
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@types/chai": "~3.5.2",
-    "@types/mocha": "~2.2.41",
     "@types/node": "~7.0.18",
-    "chai": "~3.5.0",
-    "mocha": "~3.2.0",
-    "nyc": "~11.0.3",
+    "jest": "^26.6.3",
+    "prettier": "^2.1.2",
     "rimraf": "~2.5.2",
-    "source-map-support": "0.5.9",
     "ts-node": "~3.1.0",
-    "typescript": "~3.0.3"
+    "typescript": "^4.0.5"
   },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "exclude": [
-      "**/*.d.ts",
-      "test/**"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "html",
-      "text"
-    ]
+  "dependencies": {
+    "rxjs": "^6.6.3",
+    "ts-jest": "^26.4.4"
   }
 }
-
