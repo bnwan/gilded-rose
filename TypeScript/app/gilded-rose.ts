@@ -37,6 +37,10 @@ export class GildedRose {
     return item.quality < 50;
   }
 
+  isLowQuality(item: Item): boolean {
+    return item.quality > 0;
+  }
+
   isNotBackstagePass(item: Item): boolean {
     return (
       item.name != 'Aged Brie' &&
@@ -46,6 +50,24 @@ export class GildedRose {
 
   isTicket(item: Item): boolean {
     return item.name === 'Backstage passes to a TAFKAL80ETC concert';
+  }
+
+  reduceSellByValue(item: Item) {
+    if (!this.isLegendary(item)) {
+      item.sellIn = item.sellIn - 1;
+    }
+  }
+
+  isExpired(item: Item): boolean {
+    return item.sellIn < 0;
+  }
+
+  isCheese(item: Item): boolean {
+    return item.name === 'Aged Brie';
+  }
+
+  resetQuality(item: Item): void {
+    item.quality = 0;
   }
 
   updateQuality() {
@@ -67,24 +89,22 @@ export class GildedRose {
           }
         }
       }
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.sellIn = item.sellIn - 1;
-      }
-      if (item.sellIn < 0) {
-        if (item.name != 'Aged Brie') {
-          if (item.name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (item.quality > 0) {
-              if (item.name != 'Sulfuras, Hand of Ragnaros') {
-                item.quality = item.quality - 1;
-              }
-            }
+
+      this.reduceSellByValue(item);
+
+      if (this.isExpired(item)) {
+        if (!this.isCheese(item)) {
+          if (
+            !this.isTicket(item) &&
+            this.isLowQuality(item) &&
+            !this.isLegendary(item)
+          ) {
+            this.decrementQuality(item);
           } else {
-            item.quality = item.quality - item.quality;
+            this.resetQuality(item);
           }
-        } else {
-          if (item.quality < 50) {
-            item.quality = item.quality + 1;
-          }
+        } else if (this.isHighQuality(item)) {
+          this.incrementQuality(item);
         }
       }
     }
