@@ -1,3 +1,5 @@
+import { pipe } from './utils';
+
 export class Item {
   name: string;
   sellIn: number;
