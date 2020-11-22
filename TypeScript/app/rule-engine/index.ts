@@ -1,1 +1,1 @@
-export * from './rule-engine';
+export * from './create-rule-engine';

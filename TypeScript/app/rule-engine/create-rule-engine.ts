@@ -2,14 +2,20 @@ import { Item } from '../gilded-rose';
 import { Rule } from './types/rule';
 import { RuleEngine } from './types/rule-engine';
 
-export function ruleEngine(): RuleEngine {
+export function createRuleEngine(): RuleEngine {
   const rules: Rule<Item, Item>[] = [];
 
   return {
     rule(item: Item): Item {
-      return rules
+      const processedRules = rules
         .filter((rule) => rule.matches(item))
-        .map((rule) => rule.process(item))[0];
+        .map((rule) => rule.process(item));
+
+      if (processedRules.length > 0) {
+        return processedRules[0];
+      }
+
+      throw new Error(`No matching rule found`);
     },
 
     registerRule(rule: Rule<Item, Item>): RuleEngine {
