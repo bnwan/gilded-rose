@@ -1,4 +1,4 @@
-import { Item } from '../gilded-rose';
+import { Item } from '../item';
 import { createRuleEngine } from './create-rule-engine';
 import { Rule } from './types/rule';
 

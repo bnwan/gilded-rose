@@ -1,7 +1,7 @@
-import { Item } from '../../gilded-rose';
+import { Item } from '../../item';
 import { Rule } from './rule';
 
 export interface RuleEngine {
   rule(item: Item): Item;
-  registerRule(rule: Rule<Item, Item>): RuleEngine;
+  registerRule(...rulesToRegister: Rule<Item, Item>[]): RuleEngine;
 }

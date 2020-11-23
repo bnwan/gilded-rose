@@ -1,9 +1,9 @@
-import { Item } from '../gilded-rose';
+import { Item } from '../item';
 import { Rule } from './types/rule';
 import { RuleEngine } from './types/rule-engine';
 
 export function createRuleEngine(): RuleEngine {
-  const rules: Rule<Item, Item>[] = [];
+  let rules: Rule<Item, Item>[] = [];
 
   return {
     rule(item: Item): Item {
@@ -18,8 +18,8 @@ export function createRuleEngine(): RuleEngine {
       throw new Error(`No matching rule found`);
     },
 
-    registerRule(rule: Rule<Item, Item>): RuleEngine {
-      rules.push(rule);
+    registerRule(...rulesToRegister: Rule<Item, Item>[]): RuleEngine {
+      rules = [...rules, ...rulesToRegister];
       return this;
     },
   };
